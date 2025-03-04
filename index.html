@@ -140,12 +140,7 @@
     </header>
 
     <div class="form-container">
-        <form id="orderForm" action="https://formsubmit.co/ekazein86@gmail.com" method="POST" onsubmit="return validateForm(event)">
-            <!-- Hidden fields untuk FormSubmit -->
-            <input type="hidden" name="_subject" value="Pesanan Baru dari Website">
-            <input type="hidden" name="_next" value="https://ekz121.github.io/thank-you.html">
-            <input type="hidden" name="_captcha" value="true">
-
+        <form id="orderForm" onsubmit="return sendEmail(event)">
             <div class="form-group">
                 <label for="fullName">Nama Lengkap</label>
                 <input type="text" id="fullName" name="fullName" required>
@@ -189,8 +184,17 @@
         © 2025 Perusahaan :/. All rights reserved.
     </footer>
 
+    <!-- Tambahkan EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
-        function validateForm(event) {
+        // Inisialisasi EmailJS dengan Public Key
+        (function(){
+            emailjs.init("EO5oTo-thw3OIoZyy");
+        })();
+
+        function sendEmail(event) {
+            event.preventDefault(); // Mencegah form dikirim secara default
+
             let isValid = true;
 
             // Reset pesan error
@@ -232,14 +236,27 @@
                 isValid = false;
             }
 
-            if (!isValid) {
-                event.preventDefault(); // Hentikan pengiriman jika validasi gagal
-            } else {
-                alert('Pesanan berhasil dikirim! Anda akan diarahkan ke halaman terima kasih.');
-                document.getElementById('orderForm').reset(); // Reset formulir
+            if (isValid) {
+                // Kirim email menggunakan EmailJS
+                const params = {
+                    fullName: fullName,
+                    email: email,
+                    address: address,
+                    product: product,
+                    quantity: quantity
+                };
+
+                emailjs.send('service_n11rglg', 'template_d0tf2nl', params)
+                    .then(function(response) {
+                        alert('Pesanan berhasil dikirim! Anda akan diarahkan ke halaman terima kasih.');
+                        document.getElementById('orderForm').reset(); // Reset formulir
+                        window.location.href = 'thank-you.html'; // Redirect ke halaman terima kasih
+                    }, function(error) {
+                        alert('Gagal mengirim pesanan: ' + JSON.stringify(error));
+                    });
             }
 
-            return isValid;
+            return false; // Mencegah pengiriman form default
         }
     </script>
 </body>
