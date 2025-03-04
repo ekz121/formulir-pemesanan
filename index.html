@@ -141,9 +141,10 @@
 
     <div class="form-container">
         <form id="orderForm" action="https://formsubmit.co/ekazein86@gmail.com" method="POST" onsubmit="return validateForm(event)">
-            <!-- Hidden fields for FormSubmit -->
+            <!-- Hidden fields untuk FormSubmit -->
             <input type="hidden" name="_subject" value="Pesanan Baru dari Website">
-            <input type="hidden" name="_next" value="/thank-you.html"> <!-- Ganti dengan path relatif -->
+            <input type="hidden" name="_next" value="https://ekz121.github.io/thank-you.html">
+            <input type="hidden" name="_captcha" value="true">
 
             <div class="form-group">
                 <label for="fullName">Nama Lengkap</label>
@@ -167,9 +168,9 @@
                 <label for="product">Pilih Produk</label>
                 <select id="product" name="product">
                     <option value="">-- Pilih Produk --</option>
-                    <option value="produk1">charger hp</option>
-                    <option value="produk2">mouse laptop</option>
-                    <option value="produk3">lontong</option>
+                    <option value="produk1">Charger HP</option>
+                    <option value="produk2">Mouse Laptop</option>
+                    <option value="produk3">Lontong</option>
                 </select>
                 <div class="error" id="productError">Pilih salah satu produk</div>
             </div>
@@ -190,52 +191,52 @@
 
     <script>
         function validateForm(event) {
-            event.preventDefault();
             let isValid = true;
 
-            // Reset error messages
+            // Reset pesan error
             document.querySelectorAll('.error').forEach(error => error.style.display = 'none');
 
-            // Full Name Validation
-            const fullName = document.getElementById('fullName').value;
+            // Validasi Nama Lengkap
+            const fullName = document.getElementById('fullName').value.trim();
             if (!fullName) {
                 document.getElementById('fullNameError').style.display = 'block';
                 isValid = false;
             }
 
-            // Email Validation
-            const email = document.getElementById('email').value;
+            // Validasi Email
+            const email = document.getElementById('email').value.trim();
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!email || !emailRegex.test(email)) {
                 document.getElementById('emailError').style.display = 'block';
                 isValid = false;
             }
 
-            // Address Validation
-            const address = document.getElementById('address').value;
+            // Validasi Alamat
+            const address = document.getElementById('address').value.trim();
             if (!address) {
                 document.getElementById('addressError').style.display = 'block';
                 isValid = false;
             }
 
-            // Product Validation
+            // Validasi Produk
             const product = document.getElementById('product').value;
             if (!product) {
                 document.getElementById('productError').style.display = 'block';
                 isValid = false;
             }
 
-            // Quantity Validation
+            // Validasi Jumlah
             const quantity = document.getElementById('quantity').value;
             if (!quantity || quantity <= 0) {
                 document.getElementById('quantityError').style.display = 'block';
                 isValid = false;
             }
 
-            if (isValid) {
+            if (!isValid) {
+                event.preventDefault(); // Hentikan pengiriman jika validasi gagal
+            } else {
                 alert('Pesanan berhasil dikirim! Anda akan diarahkan ke halaman terima kasih.');
                 document.getElementById('orderForm').reset(); // Reset formulir
-                document.getElementById('orderForm').submit(); // Kirim formulir ke FormSubmit
             }
 
             return isValid;
