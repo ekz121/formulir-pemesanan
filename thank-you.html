@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terima Kasih!</title>
+    <title>Terima Kasih</title>
     <style>
         * {
             margin: 0;
@@ -16,32 +16,30 @@
             background: #1a1a1a;
             color: #fff;
             min-height: 100vh;
+            padding: 20px;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            flex-direction: column;
         }
 
         .thank-you-container {
             background: #2c2c2c;
-            padding: 40px;
+            padding: 30px;
             border-radius: 15px;
             text-align: center;
             box-shadow: 0 0 20px rgba(0, 255, 204, 0.1);
-            animation: fadeIn 1s ease-in;
+            animation: slideUp 0.8s ease-out;
         }
 
         h1 {
-            font-size: 2.5em;
             color: #00ffcc;
             margin-bottom: 20px;
         }
 
         p {
-            font-size: 1.2em;
-            color: #ccc;
-            margin-bottom: 30px;
+            font-size: 1.1em;
+            margin-bottom: 20px;
         }
 
         a {
@@ -51,7 +49,6 @@
             color: #1a1a1a;
             text-decoration: none;
             border-radius: 8px;
-            font-size: 1.1em;
             transition: transform 0.3s ease, background 0.3s ease;
         }
 
@@ -61,34 +58,16 @@
         }
 
         footer {
-            position: absolute;
-            bottom: 20px;
             text-align: center;
+            padding: 20px;
+            margin-top: 30px;
             color: #888;
             font-size: 0.9em;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @media (max-width: 480px) {
-            .thank-you-container {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 2em;
-            }
-
-            p {
-                font-size: 1em;
-            }
-
-            a {
-                padding: 12px 20px;
-            }
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
     </style>
 </head>
@@ -96,7 +75,7 @@
     <div class="thank-you-container">
         <h1>Terima Kasih!</h1>
         <p>Pesanan Anda telah berhasil dikirim. Kami akan segera memprosesnya.</p>
-        <a href="https://ekz121.github.io/formulir-pemesanan/">Kembali ke Formulir</a>
+        <a href="index.html">Kembali ke Formulir</a>
     </div>
 
     <footer>
