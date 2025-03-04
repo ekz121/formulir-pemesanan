@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Pemesanan Produk</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #1a1a1a;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            background: #2c2c2c;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        header img {
+            max-width: 100px;
+            margin-bottom: 10px;
+        }
+
+        header h1 {
+            font-size: 2em;
+            color: #00ffcc;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #2c2c2c;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.1);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #00ffcc;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            background: #3d3d3d;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            box-shadow: 0 0 5px #00ffcc;
+            background: #4a4a4a;
+        }
+
+        .error {
+            color: #ff4d4d;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #00ffcc;
+            border: none;
+            border-radius: 8px;
+            color: #1a1a1a;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background: #00e6b8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            button {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="img/1.jpg" alt="Logo Perusahaan">
+        <h1>Formulir Pemesanan Produk</h1>
+    </header>
+
+    <div class="form-container">
+        <form id="orderForm" action="https://formsubmit.co/ekazein86@gmail.com" method="POST" onsubmit="return validateForm(event)">
+            <!-- Hidden fields for FormSubmit -->
+            <input type="hidden" name="_subject" value="Pesanan Baru dari Website">
+            <input type="hidden" name="_next" value="/thank-you.html"> <!-- Ganti dengan path relatif -->
+
+            <div class="form-group">
+                <label for="fullName">Nama Lengkap</label>
+                <input type="text" id="fullName" name="fullName">
+                <div class="error" id="fullNameError">Nama lengkap tidak boleh kosong</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email">
+                <div class="error" id="emailError">Email tidak valid</div>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Alamat Pengiriman</label>
+                <input type="text" id="address" name="address">
+                <div class="error" id="addressError">Alamat pengiriman harus diisi</div>
+            </div>
+
+            <div class="form-group">
+                <label for="product">Pilih Produk</label>
+                <select id="product" name="product">
+                    <option value="">-- Pilih Produk --</option>
+                    <option value="produk1">charger hp</option>
+                    <option value="produk2">mouse laptop</option>
+                    <option value="produk3">lontong</option>
+                </select>
+                <div class="error" id="productError">Pilih salah satu produk</div>
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Jumlah Produk</label>
+                <input type="number" id="quantity" name="quantity" min="1">
+                <div class="error" id="quantityError">Jumlah harus lebih dari 0</div>
+            </div>
+
+            <button type="submit">Kirim Pesanan</button>
+        </form>
+    </div>
+
+    <footer>
+        © 2025 Perusahaan :/. All rights reserved.
+    </footer>
+
+    <script>
+        function validateForm(event) {
+            event.preventDefault();
+            let isValid = true;
+
+            // Reset error messages
+            document.querySelectorAll('.error').forEach(error => error.style.display = 'none');
+
+            // Full Name Validation
+            const fullName = document.getElementById('fullName').value;
+            if (!fullName) {
+                document.getElementById('fullNameError').style.display = 'block';
+                isValid = false;
+            }
+
+            // Email Validation
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !emailRegex.test(email)) {
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            }
+
+            // Address Validation
+            const address = document.getElementById('address').value;
+            if (!address) {
+                document.getElementById('addressError').style.display = 'block';
+                isValid = false;
+            }
+
+            // Product Validation
+            const product = document.getElementById('product').value;
+            if (!product) {
+                document.getElementById('productError').style.display = 'block';
+                isValid = false;
+            }
+
+            // Quantity Validation
+            const quantity = document.getElementById('quantity').value;
+            if (!quantity || quantity <= 0) {
+                document.getElementById('quantityError').style.display = 'block';
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert('Pesanan berhasil dikirim! Anda akan diarahkan ke halaman terima kasih.');
+                document.getElementById('orderForm').reset(); // Reset formulir
+                document.getElementById('orderForm').submit(); // Kirim formulir ke FormSubmit
+            }
+
+            return isValid;
+        }
+    </script>
+</body>
+</html>
